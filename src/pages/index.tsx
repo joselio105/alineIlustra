@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <Page>
       <div className="w-full flex flex-wrap gap-2">
-        <Image src={Photo01} alt="" className="w-2/5" />
-        <Image src={Photo02} alt="" className="w-2/5" />
-        <Image src={Photo03} alt="" className="w-full" />
+        <Image src={Photo01} alt="" className="w-64 h-64 object-cover rounded-xl" />
+        <Image src={Photo02} alt="" className="w-64 h-64 object-cover rounded-xl" />
+        <Image src={Photo03} alt="" className="w-64 h-64 object-cover rounded-xl" />
       </div>
     </Page>
   )
