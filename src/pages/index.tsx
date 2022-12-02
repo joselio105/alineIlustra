@@ -1,24 +1,26 @@
 import Image from "next/image";
-import Page from "../components/Page";
-
-import Photo01 from "../../public/barba-azul/1.png"
-import Photo02 from "../../public/barba-azul/2.png"
-import Photo03 from "../../public/barba-azul/3.png"
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Page from "../components/Page";
+import { Works, getDir } from "../contents/works";
+
+const images = Object.keys(Works).map((key: string) => `/${getDir(key)}/1.png`);
 
 export default function Home() {
+
+  const router = useRouter();
+  const id = router.query.id as string;
+
   return (
     <Page>
       <div className="w-full flex flex-wrap gap-2">
-        <Link href="/view">
-          <Image src={Photo01} alt="" className="w-64 h-64 object-cover rounded-xl" />
-        </Link>
-        <Link href="/view">
-          <Image src={Photo02} alt="" className="w-64 h-64 object-cover rounded-xl" />
-        </Link>
-        <Link href="/view">
-          <Image src={Photo03} alt="" className="w-64 h-64 object-cover rounded-xl" />
-        </Link>
+        {
+          images.map( (image, key) => (
+            <Link href={`/view/[pid]/${key}`} key={key}>
+              <Image src={image} width={256} height={256} alt={image} className="w-64 h-64 object-cover rounded-xl" />
+          </Link>
+          ))
+        }
       </div>
     </Page>
   )
