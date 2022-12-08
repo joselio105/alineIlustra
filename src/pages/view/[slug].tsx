@@ -2,7 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { GetStaticPaths } from "next";
 
+import fsPromises from 'fs/promises';
+import path from 'path'
+
 import Page from "../../components/Page";
+
+import works from "../../../public/works.json";
 
 interface Props {
   title: string
@@ -10,23 +15,23 @@ interface Props {
   content: string[]
 }
 
-const contentFile = "http://localhost:3000/works.json";
+const contentFile = `public/works.json`;
 
-const Post = ( { content, slug, title }: Props ) => {
+const Post = ( { content, slug }: Props ) => {
   
     return (
-        <Page>
+        <Page works={works} slug={slug}>
           <div className="flex flex-col">
               <div className="w-full flex flex-wrap gap-2">
                 {
                   content.map(image => (
                     <Image 
                       key={image}
-                      loader={()=>(`http://localhost:3000/${slug}/${image}`)}
+                      loader={()=>(`${process.cwd()}${slug}/${image}`)}
                       src={`${image}`}
                       width={500}
                       height={500}
-                      alt={image}
+                      alt={`${process.cwd()}${slug}/${image}`}
                       className="w-full object-cover rounded-xl"
                     />
                   ))
@@ -48,8 +53,9 @@ const Post = ( { content, slug, title }: Props ) => {
 export default Post;
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-    const response = await fetch(contentFile)
-    const works = await response.json()
+    const filePath = path.join(process.cwd(), contentFile);
+    const jsonData = await fsPromises.readFile(filePath);
+    const works = JSON.parse(String(jsonData));
   
     const paths = works.map(({ slug }: Props) => ({
       params: { slug },
@@ -65,9 +71,12 @@ interface ContextProps {
 }
 
 export const getStaticProps = async ( context: ContextProps ) => {
-    const { slug } = context.params
-    const response = await fetch(contentFile)
-    const works = await response.json();
-    const work = works.find((work: Props) => (work.slug === slug))
-    return { props: work } 
+    const { slug } = context.params;
+    const filePath = path.join(process.cwd(), contentFile);
+    const jsonData = await fsPromises.readFile(filePath);
+    const works = JSON.parse(String(jsonData));
+
+    return {
+      props: works.find((work: Props) => (work.slug === slug))
+    }
   }

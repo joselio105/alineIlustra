@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
+import { Work } from "../@types/Work";
 import Menu from "./Menu"
 
 interface Props {
     children: ReactNode
+    works: Work[]
+    slug: string
 }
 
-export default function Page( { children }: Props ){
+export default function Page( { children, works, slug }: Props ){
     return (
-        <div className="w-screen h-full min-h-screen bg-zinc-200">
-            <header className="max-w-5xl mx-auto py-5 border-b border-zinc-600 text-3xl font-bold flex items-center">
-                Aline
-            </header>
+        <div className="w-screen h-full min-h-screen">
             <div className="max-w-5xl mx-auto flex gap-4 items-start">
-                <Menu />
+                <Menu slug={slug} works={works} />
                 <main className="flex flex-1 p-4">
                     {children}
                 </main>
