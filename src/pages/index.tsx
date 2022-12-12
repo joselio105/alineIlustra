@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <Page works={works} slug="">
-      <div className="w-full flex flex-wrap gap-2">
+      <div className="w-full flex flex-wrap gap-2 mt-24">
         {
           works.map( ({ slug }) => (
             <Link href={`/view/${slug}`} key={slug}>

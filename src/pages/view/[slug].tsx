@@ -17,11 +17,12 @@ interface Props {
 
 const contentFile = `public/works.json`;
 
-const Post = ( { content, slug }: Props ) => {
+const Post = ( { content, slug, title }: Props ) => {
   
     return (
         <Page works={works} slug={slug}>
           <div className="flex flex-col">
+              <h2 className="text-5xl text-zinc-900 font-light flex items-center justify-center h-24">{title}</h2>
               <div className="w-full flex flex-wrap gap-2">
                 {
                   content.map(image => (

@@ -10,7 +10,7 @@ interface Props {
 export default function Menu( { works, slug }: Props ){
     return(
       <div className="flex flex-col">
-        <h1 className="text-zinc-900 font-semibold text-lg py-8 px-3">Aline</h1>
+        <h1 className="text-zinc-900 font-semibold text-lg flex items-center h-24">Aline</h1>
         <nav className="flex flex-col gap-4 font-light mt-5">
           <ul className="flex flex-col gap-4 text-zinc-800">
             {
